@@ -1,14 +1,26 @@
+"""
+Some MapReduce examples.
+"""
+
 import mapred.map_reduce as mr
+
+__author__ = 'Christof Pieloth'
 
 
 class WordCount(mr.MapReduce):
+    """
+    Counts the occurrence of each tokenized word.
+    Input:  hardcoded input.
+    Output: prints output to stdout.
+    """
+
     def __init__(self):
         super().__init__()
 
     def input(self):
-        return [('file1', 'foo bar baz baz foo'),
-                ('file2', 'foo bar foo baz bar'),
-                ('file3', 'foo bar baz baz foo')]
+        return [('line#01', 'foo bar baz baz foo'),
+                ('line#02', 'foo bar foo baz bar'),
+                ('line#03', 'foo bar baz baz foo')]
 
     def output(self, data):
         print('%s' % data)
@@ -21,11 +33,15 @@ class WordCount(mr.MapReduce):
 
     @classmethod
     def main(cls):
-        mr = cls()
-        mr.run()
+        cls().run()
 
 
 class WordCountFolder(mr.FileLineMapReduce):
+    """
+    Counts the occurrence of each tokenized word.
+    Input:  directory.
+    Output: file.
+    """
 
     def __init__(self, input_folder, output_folder):
         super().__init__(input_folder, output_folder)
@@ -49,8 +65,7 @@ class WordCountFolder(mr.FileLineMapReduce):
 
     @classmethod
     def main(cls):
-        mr = cls('.', '.')
-        mr.run()
+        cls('.', '.').run()
 
 
 if __name__ == "__main__":

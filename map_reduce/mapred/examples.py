@@ -26,7 +26,7 @@ class WordCount(mr.MapReduce):
         print('%s' % data)
 
     def map(self, key, value):
-        return [(w.strip(), 1) for w in value.split(' ')]
+        return [(token.strip(), 1) for token in value.split(' ')]
 
     def reduce(self, key, value_list):
         return [sum(value_list)]
